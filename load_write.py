@@ -391,7 +391,7 @@ class load_file:
             self.parametrization    = int(ini[10])
             self.tied_res           = str(ini[11])
             self.model_path         = str(ini[12])
-            self.n_slaves           = int(ini[13])
+            self.n_subordinates           = int(ini[13])
             self.PEST_name          = str(ini[14])
             self.IP_addr            = str(ini[15])
             self.IP_port            = int(ini[16])
@@ -826,22 +826,22 @@ class write_file:
     def batch_beopest(self,addr,load):
 #==============================================================================
         """
-        Writes BATCH-script for running beoPEST on n-slaves (machines)
+        Writes BATCH-script for running beoPEST on n-subordinates (machines)
         
         Parameters
         ----------
         addr :              str
-            IP adress of "slave"-machine
+            IP adress of "subordinate"-machine
         load :              obj
             Object holding all initilized values read from ini files              
 
         """
         fid1 = open('run_beopest.bat','w')
         fid1.write('\n')
-        fid1.write('REM Start n slaves'+'\n')
+        fid1.write('REM Start n subordinates'+'\n')
         fid1.write('\n')
-        fid1.write('for /L %%i in (1,1,'+str(load.n_slaves)+') do ('+'\n')
-        fid1.write('	cd slave%%i'+'\n')
+        fid1.write('for /L %%i in (1,1,'+str(load.n_subordinates)+') do ('+'\n')
+        fid1.write('	cd subordinate%%i'+'\n')
         fid1.write('	start beopest64.exe '+load.PEST_name+'.pst /h '+str(addr)+':'+str(load.IP_port)+'>> beopest_output.dat'+'\n') 
         fid1.write('	cd..'+'\n')
         fid1.write(')'+'\n')

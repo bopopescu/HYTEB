@@ -359,12 +359,12 @@ class inversion_module:
         print 'done'
         
 #==============================================================================
-    def copy2slaves(self,pp_x,pp_y,run_allmodels='on',tmp_numb=''):
+    def copy2subordinates(self,pp_x,pp_y,run_allmodels='on',tmp_numb=''):
 #==============================================================================
         """
-        Creates n slave dir.
+        Creates n subordinate dir.
 
-        Make n new slave subdirectories and copy pest and model files to folder
+        Make n new subordinate subdirectories and copy pest and model files to folder
 
         Parameters
         ----------
@@ -373,24 +373,24 @@ class inversion_module:
         pp_y :              List(int)
             python list - node positions of pilot points in row direction
         run_allmodel :      str
-            run batch file "allmodels" before copying files into slave dir
+            run batch file "allmodels" before copying files into subordinate dir
         tmp_nump :          int
             
         
         """
         import errno
         
-        print 'copy2slave:'
+        print 'copy2subordinate:'
         
         cwd = os.getcwd()
         path ='C:/temp/HYTEB'+str(tmp_numb)
         
-        for i in range(self.load.n_slaves):
+        for i in range(self.load.n_subordinates):
             try:
                 shutil.rmtree(path+str(tmp_numb))
             except: 
 #                ishutil.Error as e:
-                print 'copy2slaves: folder does not excist!!! '
+                print 'copy2subordinates: folder does not excist!!! '
         
         # --- delete temporay geophys files ---  
         for i in pp_y:
@@ -420,40 +420,40 @@ class inversion_module:
                 subprocess.call('gw_model.bat')
                        
         print 'done'                                           
-        # --- copy work folde to slave# and move folders back into work folder
-        for i in range(self.load.n_slaves):
+        # --- copy work folde to subordinate# and move folders back into work folder
+        for i in range(self.load.n_subordinates):
             # --- copy to dir ---            
-            print str(i+1)+'/'+str(self.load.n_slaves)
+            print str(i+1)+'/'+str(self.load.n_subordinates)
             try: 
-                shutil.copytree(cwd,path+'/slave'+str(i+1))
+                shutil.copytree(cwd,path+'/subordinate'+str(i+1))
             # --- Directories are the same
             except shutil.Error as e:
-                print 'Error in copy2slave:'
+                print 'Error in copy2subordinate:'
                 print('Directory not copied. Error: %s' % e)
             # --- Directories already exist, delete and try copy again
             except OSError as e:
                 try:
-                    shutil.rmtree(path+'/slave'+str(i+1))
+                    shutil.rmtree(path+'/subordinate'+str(i+1))
                 except shutil.Error as e:
-                    print 'Error in copy2slave:'
+                    print 'Error in copy2subordinate:'
                     print('Directory not copied. Error: %s' % e)    
                 try:
-                    shutil.copytree(cwd,path+'/slave'+str(i+1))
+                    shutil.copytree(cwd,path+'/subordinate'+str(i+1))
                 except shutil.Error as e:
-                    print 'Error in copy2slave:'
+                    print 'Error in copy2subordinate:'
                     print('Directory not copied. Error: %s' % e)
                 # --- Directories already exist, delete and try copy again
                 except OSError as e:
-                    print 'Error in copy2slaves:'
+                    print 'Error in copy2subordinates:'
                     print('Directory not copied. Error: %s' % e)
                     
         
-        for i in range(self.load.n_slaves):
+        for i in range(self.load.n_subordinates):
             try:
-                shutil.move(path+'/slave'+str(i+1),cwd)
+                shutil.move(path+'/subordinate'+str(i+1),cwd)
             # --- Directories are the same
             except shutil.Error as e:
-                print 'Error in copy2slave:'
+                print 'Error in copy2subordinate:'
                 print('Directory not MOVED. Error: %s' % e)
                 break
             except OSError as e:
@@ -462,13 +462,13 @@ class inversion_module:
                     break
                     
                 else:
-                    print 'Error in copy2slave:'
+                    print 'Error in copy2subordinate:'
                     print "\nBE CAREFUL! Directory %s already exists." % path
                 
 
         
 #==============================================================================
-    def delete_files(self,del_slave='off',
+    def delete_files(self,del_subordinate='off',
                      ext_PEST   =('.1','.2','.3','.4','.5','.6','.7','.9','.bat','.jac','.jco','.jst','.mtt','.par','.prf','.pst','.rec','.rmr','rei','.res','.rst','.stp','.svd','.sen','.seo','.sen'),
                      ext_modflow=('.inf','.spc','.pth','.mpt','.mpn','.nam','.hds','.cbb','.ddn','.glo','.lst','.bas','.dis','.dis','.lpf','.rch','.wel','.oc','.gmg','.riv'),
                      ext_other  = ('.emm','.emo','.err','.dat','.ite','.log','.ref','.tpl','.ins','.ite','.fwr','.tem','.mod','.pts','.dat','.in','.smp','.obs','.vtk','.voo')):             
@@ -478,8 +478,8 @@ class inversion_module:
         
         Parameters
         ----------
-        del_slave :         str
-            delete PEST slave folders
+        del_subordinate :         str
+            delete PEST subordinate folders
         ext_PEST :          tuple(str)
             tuple with dtype of PEST file(s) to delete
         ext_modflow :       tuple(str)
@@ -493,15 +493,15 @@ class inversion_module:
         print 'delete_fiels:'        
         cwd = os.getcwd()        
         
-        # --- deleting foldes with slaves ---
-        if del_slave == 'on':
-            print '     deleting all slaves'
+        # --- deleting foldes with subordinates ---
+        if del_subordinate == 'on':
+            print '     deleting all subordinates'
             for i in range(100):               
-                shutil.rmtree(cwd+'\\'+'slave'+str(i+1),ignore_errors=True)
-        if del_slave == 'off':
-            print '     no slaves are deleted'
-        if del_slave != 'on' and del_slave != 'off':
-            print '     wrong input for del_slave!'
+                shutil.rmtree(cwd+'\\'+'subordinate'+str(i+1),ignore_errors=True)
+        if del_subordinate == 'off':
+            print '     no subordinates are deleted'
+        if del_subordinate != 'on' and del_subordinate != 'off':
+            print '     wrong input for del_subordinate!'
          
          
         # --- delete files with extensions ---

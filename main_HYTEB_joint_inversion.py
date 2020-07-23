@@ -31,8 +31,8 @@ realization = [141,202,234,359,450,464,678,727,944,991]
 # --- run HYTEB analysis for multiple realizations ---
 for i in realization:  
     
-    # --- delete all "old input/out put files and PEST slaves ---    
-    invs.delete_files(del_slave='on')
+    # --- delete all "old input/out put files and PEST subordinates ---    
+    invs.delete_files(del_subordinate='on')
     
     # --- copy reference system from folder(see ini-files) to work directory --- 
     invs.model2folder(i)
@@ -154,8 +154,8 @@ for i in realization:
     # --- make PEST control file ---
     invs.PEST_inversion(pp_x,pp_y,x_valley,y_valley,n_pp_valley,n_tem_data=n_tem_data)    
     
-    # --- generating slave for paralization --- 
-    invs.copy2slaves(pp_x,pp_y,tmp_numb=i) 
+    # --- generating subordinate for paralization --- 
+    invs.copy2subordinates(pp_x,pp_y,tmp_numb=i) 
     
     # --- run joint inversion with BeoPEST ---
     invs.batch_beopest(run_inversion='on')

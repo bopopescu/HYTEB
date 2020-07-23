@@ -587,7 +587,7 @@ class geophys_module:
         - data_i <= 0
         - err <= error_i
         
-        See master Thesis by Jacobsen 
+        See main Thesis by Jacobsen 
         """  
 
                
@@ -918,7 +918,7 @@ class geophys_module:
 #                shutil.rmtree(path_tem_data)
 #                os.mkdir(path_tem_data)
 #            except shutil.Error as e:
-#                print 'Error in copy2slave:'
+#                print 'Error in copy2subordinate:'
 #                print('Directory not copied. Error: %s' % e) 
 #                print 'folder does not excist!!! '
 #
